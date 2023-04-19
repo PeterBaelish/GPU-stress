@@ -1,0 +1,25 @@
+1个受害者vectorAdd
+empty	8.493918539
+3MB_write	8.852321899
+6MB_write	9.577019351
+12MB_write	10.001100622
+18MB_write	9.824683028
+24MB_write	10.437355658
+2个受害者vectorAdd,matrixMul
+empty	9.572215991
+3MB_write	11.581694042
+6MB_write	12.001925772
+12MB_write	11.710228283
+18MB_write	11.173676771
+24MB_write	10.461678087
+
+3个受害者vectorAdd,matrixMul,scalarProd
+empty	10.202786972
+3MB_write	12.106902130
+6MB_write	12.397462230
+12MB_write	11.279426820
+18MB_write	11.437454338
+24MB_write	11.453584145
+
+
+
