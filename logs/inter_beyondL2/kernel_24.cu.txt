@@ -1,0 +1,89 @@
+kernel_24.cu.out
+[/home/amax/linxinrui/project/new_exp/victims/exec/convolutionFFT2D] - Starting...
+GPU Device 0: "Turing" with compute capability 7.5
+
+Testing built-in R2C / C2R FFT-based convolution
+...allocating memory
+5.199110938====convolutionFFT2D ms
+[/home/amax/linxinrui/project/new_exp/victims/exec/convolutionSeparable] - Starting...
+GPU Device 0: "Turing" with compute capability 7.5
+
+Image Width x Height = 3072 x 3072
+
+Allocating and initializing host arrays...
+Allocating and initializing CUDA arrays...
+5.109893012====convolutionSeparable ms
+/home/amax/linxinrui/project/new_exp/victims/exec/dct8x8 Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+dct8x8 could not locate Sample Image <(null)>
+Exiting...
+3.243931685====dct8x8 ms
+/home/amax/linxinrui/project/new_exp/victims/exec/dwtHaar1D Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+source file    = "(null)"
+reference file = "result.dat"
+gold file      = "(null)"
+3.523567425====dwtHaar1D ms
+/home/amax/linxinrui/project/new_exp/victims/exec/dxtc Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+Error, unable to find source image  <(null)>
+3.577514390====dxtc ms
+/home/amax/linxinrui/project/new_exp/victims/exec/fastWalshTransform Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+Initializing data...
+...allocating CPU memory
+...allocating GPU memory
+5.135143999====fastWalshTransform ms
+[[histogram]] - Starting...
+GPU Device 0: "Turing" with compute capability 7.5
+
+CUDA device [NVIDIA GeForce RTX 2080 Ti] has 68 Multi-Processors, Compute 7.5
+Initializing data...
+...allocating CPU memory.
+...generating input data
+...allocating GPU memory and copying input data
+
+5.204998460====histogram ms
+HSOpticalFlow Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+Loading "frame10.ppm" ...
+File not found
+3.437100220====HSOpticalFlow ms
+[Matrix Multiply Using CUDA] - Starting...
+GPU Device 0: "Turing" with compute capability 7.5
+
+MatrixA(320,320), MatrixB(640,320)
+5.178672184====matrixMul ms
+Cannot find input file test1920x1080.nv12
+ Exiting
+5.203733083====NV12toBGRandResize ms
+/home/amax/linxinrui/project/new_exp/victims/exec/scalarProd Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+Initializing data...
+...allocating CPU memory.
+...allocating GPU memory.
+5.080962331====scalarProd ms
+[stereoDisparity] Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+> GPU device has 68 Multi-Processors, SM 7.5 compute capabilities
+
+Loaded <(null)> as image 0
+6.647235533====stereoDisparity ms
+[Vector addition of 50000 elements]
+5.124966351====vectorAdd ms
+.053171205
+.065343797====victims_run ms

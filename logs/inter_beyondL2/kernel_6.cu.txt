@@ -1,0 +1,211 @@
+kernel_6.cu.out
+[/home/amax/linxinrui/project/new_exp/victims/exec/convolutionFFT2D] - Starting...
+GPU Device 0: "Turing" with compute capability 7.5
+
+Testing built-in R2C / C2R FFT-based convolution
+...allocating memory
+...generating random input data
+...creating R2C & C2R FFT plans for 2048 x 2048
+...uploading to GPU and padding convolution kernel and input data
+...transforming convolution kernel
+...running GPU FFT convolution: 8928.571153 MPix/s (0.448000 ms)
+...reading back GPU convolution results
+...running reference CPU convolution
+...comparing the results: rel L2 = 8.680021E-08 (max delta = 8.227172E-07)
+L2norm Error OK
+...shutting down
+Testing custom R2C / C2R FFT-based convolution
+...allocating memory
+...generating random input data
+...creating C2C FFT plan for 2048 x 1024
+...uploading to GPU and padding convolution kernel and input data
+...transforming convolution kernel
+...running GPU FFT convolution: 7285.974170 MPix/s (0.549000 ms)
+...reading back GPU FFT results
+...running reference CPU convolution
+...comparing the results: rel L2 = 1.067915E-07 (max delta = 9.817303E-07)
+L2norm Error OK
+...shutting down
+Testing updated custom R2C / C2R FFT-based convolution
+...allocating memory
+...generating random input data
+...creating C2C FFT plan for 2048 x 1024
+...uploading to GPU and padding convolution kernel and input data
+...transforming convolution kernel
+...running GPU FFT convolution: 9411.764442 MPix/s (0.425000 ms)
+...reading back GPU FFT results
+...running reference CPU convolution
+...comparing the results: rel L2 = 1.065127E-07 (max delta = 9.817303E-07)
+L2norm Error OK
+...shutting down
+Test Summary: 0 errors
+Test passed
+9.304143365====convolutionFFT2D ms
+[/home/amax/linxinrui/project/new_exp/victims/exec/convolutionSeparable] - Starting...
+GPU Device 0: "Turing" with compute capability 7.5
+
+Image Width x Height = 3072 x 3072
+
+Allocating and initializing host arrays...
+Allocating and initializing CUDA arrays...
+Running GPU convolution (16 identical iterations)...
+
+convolutionSeparable, Throughput = 23116.1884 MPixels/sec, Time = 0.00041 s, Size = 9437184 Pixels, NumDevsUsed = 1, Workgroup = 0
+
+Reading back GPU results...
+
+Checking the results...
+ ...running convolutionRowCPU()
+ ...running convolutionColumnCPU()
+ ...comparing the results
+ ...Relative L2 norm: 0.000000E+00
+
+Shutting down...
+Test passed
+6.801748385====convolutionSeparable ms
+/home/amax/linxinrui/project/new_exp/victims/exec/dct8x8 Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+dct8x8 could not locate Sample Image <(null)>
+Exiting...
+3.432619884====dct8x8 ms
+/home/amax/linxinrui/project/new_exp/victims/exec/dwtHaar1D Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+source file    = "(null)"
+reference file = "result.dat"
+gold file      = "(null)"
+3.487631736====dwtHaar1D ms
+/home/amax/linxinrui/project/new_exp/victims/exec/dxtc Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+Error, unable to find source image  <(null)>
+3.441817217====dxtc ms
+/home/amax/linxinrui/project/new_exp/victims/exec/fastWalshTransform Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+Initializing data...
+...allocating CPU memory
+...allocating GPU memory
+...generating data
+Data length: 8388608; kernel length: 128
+Running GPU dyadic convolution using Fast Walsh Transform...
+GPU time: 2.936000 ms; GOP/s: 98.571855
+Reading back GPU results...
+Running straightforward CPU dyadic convolution...
+Comparing the results...
+Shutting down...
+L2 norm: 1.021579E-07
+Test passed
+8.840309835====fastWalshTransform ms
+[[histogram]] - Starting...
+GPU Device 0: "Turing" with compute capability 7.5
+
+CUDA device [NVIDIA GeForce RTX 2080 Ti] has 68 Multi-Processors, Compute 7.5
+Initializing data...
+...allocating CPU memory.
+...generating input data
+...allocating GPU memory and copying input data
+
+Starting up 64-bin histogram...
+
+Running 64-bin GPU histogram for 67108864 bytes (16 runs)...
+
+histogram64() time (average) : 0.00017 sec, 396068.5495 MB/sec
+
+histogram64, Throughput = 396068.5495 MB/s, Time = 0.00017 s, Size = 67108864 Bytes, NumDevsUsed = 1, Workgroup = 64
+
+Validating GPU results...
+ ...reading back GPU results
+ ...histogram64CPU()
+ ...comparing the results...
+ ...64-bin histograms match
+
+Shutting down 64-bin histogram...
+
+
+Initializing 256-bin histogram...
+Running 256-bin GPU histogram for 67108864 bytes (16 runs)...
+
+histogram256() time (average) : 0.00018 sec, 365840.4923 MB/sec
+
+histogram256, Throughput = 365840.4923 MB/s, Time = 0.00018 s, Size = 67108864 Bytes, NumDevsUsed = 1, Workgroup = 192
+
+Validating GPU results...
+ ...reading back GPU results
+ ...histogram256CPU()
+ ...comparing the results
+ ...256-bin histograms match
+
+Shutting down 256-bin histogram...
+
+
+Shutting down...
+
+NOTE: The CUDA Samples are not meant for performance measurements. Results may vary when GPU Boost is enabled.
+
+[histogram] - Test Summary
+Test passed
+5.473244595====histogram ms
+HSOpticalFlow Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+Loading "frame10.ppm" ...
+File not found
+3.498861690====HSOpticalFlow ms
+[Matrix Multiply Using CUDA] - Starting...
+GPU Device 0: "Turing" with compute capability 7.5
+
+MatrixA(320,320), MatrixB(640,320)
+Computing result using CUDA Kernel...
+done
+Performance= 1486.41 GFlop/s, Time= 0.088 msec, Size= 131072000 Ops, WorkgroupSize= 1024 threads/block
+Checking computed result for correctness: Result = PASS
+
+NOTE: The CUDA Samples are not meant for performancemeasurements. Results may vary when GPU Boost is enabled.
+5.137750037====matrixMul ms
+Cannot find input file test1920x1080.nv12
+ Exiting
+5.059155892====NV12toBGRandResize ms
+/home/amax/linxinrui/project/new_exp/victims/exec/scalarProd Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+Initializing data...
+...allocating CPU memory.
+...allocating GPU memory.
+...generating input data in CPU mem.
+...copying input data to GPU mem.
+Data init done.
+Executing GPU kernel...
+GPU time: 0.045000 msecs.
+Reading back GPU result...
+Checking GPU results...
+..running CPU scalar product calculation
+...comparing the results
+Shutting down...
+L1 error: 2.745062E-08
+Test passed
+5.137692387====scalarProd ms
+[stereoDisparity] Starting...
+
+GPU Device 0: "Turing" with compute capability 7.5
+
+> GPU device has 68 Multi-Processors, SM 7.5 compute capabilities
+
+Loaded <(null)> as image 0
+8.639211584====stereoDisparity ms
+[Vector addition of 50000 elements]
+Copy input data from the host memory to the CUDA device
+CUDA kernel launch with 196 blocks of 256 threads
+Copy output data from the CUDA device to the host memory
+Test PASSED
+Done
+5.159088624====vectorAdd ms
+.051295503
+.063417198====victims_run ms
