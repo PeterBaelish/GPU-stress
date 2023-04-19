@@ -1,0 +1,96 @@
+#!/bin/bash
+NUM_SM=28
+# Capture the start time
+begin_time=`date +%s.%N`
+# full_filename=/home/amax/linxinrui/project/new_exp/victims/exec/dwtHaar1D
+full_filename=$1
+cd "$(dirname "$full_filename")"
+relative_file=$(basename "$full_filename")
+
+for (( k=0; k<5; k++ ));do
+    # echo $k
+    for (( i=0; i<$NUM_SM; i++ ));do
+        # $filename --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+        # echo $relative_file
+        ./"$relative_file" &
+        # $1
+        # taskset -acp 0 $pid
+        # cpulimit -l 50 -p $pid
+    done
+    wait
+done
+end_time=`date +%s.%N` 
+echo "$end_time - $begin_time" | bc 
+
+# # ##inter compute
+# # Launch enemy program on each SM
+# NUM_SM=28
+# # Capture the start time
+
+# for victim in /home/jane/task/new_exp/victims/exec/* ;do
+#     ##排除bmp和dat文件，和data文件夹
+#     if [[ ${victim} != *"bmp" && ${victim} != *"dat" && ${victim} != *"data"  && ${victim} != *"flo" && ${victim} != *"output" && ${victim} != *"pgm" ]];
+#     then
+#         if [[ ${victim} != *"imageDenoising" && ${victim} != *"recursiveGaussian" && ${victim} != *"bilateralFilter" ]];
+#         then
+#             sh /home/jane/task/new_exp/start_as_root.sh
+#             echo “start mps”
+#             sleep 10
+#             start1=$(date +%s.%N)
+#             for (( k=0; k<5; k++ ));do
+#                 for (( i=0; i<NUM_SM; i++ ));do
+#                     $victim --device 0 --sm $i  --block-size 1024 --grid-size $((28))  &
+#                 done
+#                 wait
+#             done
+#             end1=$(date +%s.%N)
+
+#             time_diff=$(echo "$end1 - $start1" | bc )
+#             echo "$victim Total time taken: $time_diff seconds\n" >> ../time_result.txt 
+#             sh /home/jane/task/new_exp/stop_as_root.sh
+#             echo "end mps"
+#         fi
+#     fi
+# done
+# ##inter compute
+# # Launch enemy program on each SM
+# NUM_SM=28
+# # Capture the start time
+# for victim in *;do
+#     if [ -r $victim ]
+#     then
+#         start1=$(date +%s.%N)
+#         for (( k=0; k<1; k++ ))
+#             do
+#             for (( i=0; i<$NUM_SM; i++ ))
+#                 do
+#                     ./$victim --device 0 --sm $i --block-size 1024 --grid-size $((28))  &
+#                 done
+#             wait
+#         done
+#         end1=$(date +%s.%N)
+
+#         time_diff=$(echo "$end1 - $start1" | bc )
+#         echo "$victim Total time taken: $time_diff seconds" >> deol.txt
+#     fi
+# done
+# # Launch enemy program on each SM
+# NUM_SM=28
+# # Capture the start time
+# start1=$(date +%s.%N)
+
+# for (( k=0; k<5; k++ ))
+# do
+#     for (( i=0; i<$NUM_SM; i++ ))
+#     do
+#         ./vectorAdd --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+#         ./matrixMul --device 0 --sm $i --block-size 1024 --grid-size $((28))  &
+#         ./scalarProd --device 0 --sm $i --block-size 1024 --grid-size $((28))  &
+#     done
+#     wait
+# done
+# # Capture the end time
+# end1=$(date +%s.%N)
+
+# time_diff=$(echo "$end1 - $start1" | bc )
+# echo "Total time taken: $time_diff seconds"
