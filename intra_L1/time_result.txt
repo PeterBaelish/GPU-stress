@@ -1,0 +1,27 @@
+1个受害者vectorAdd
+empty	8.219031699
+all_read	8.585998465
+all_write	8.568505023
+read_write_8_24	8.403823883,9.092876211
+read_write_16_16	9.283281291
+read_write_24_8	8.411014570
+
+2个受害者vectorAdd,matrixMul
+empty	8.978145427
+all_read	9.642395014
+all_write	10.271536863
+read_write_8_24	9.216242244,9.992229025
+read_write_16_16	9.673829683
+read_write_24_8	9.976274474
+
+3个受害者vectorAdd,matrixMul,scalarProd
+empty	10.842789616
+all_read	11.508269848
+all_write	10.823836949
+read_write_8_24	11.633127968
+read_write_16_16	10.732425141
+read_write_24_8	10.166684542
+
+4个受害者vectorAdd,matrixMul,scalarProd,5内核
+
+

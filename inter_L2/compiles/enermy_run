@@ -1,0 +1,56 @@
+#!/bin/bash
+
+
+
+###自己程序
+# result=$(victim_time /home/jane/task/new_exp/victims/exec/vectorAdd) 
+
+# echo "$result is the time" >>time_result.txt
+
+NUM_SM=28
+
+for file in *.cu.out; do
+    echo "$file" >>/home/amax/linxinrui/project/new_exp/logs/inter_L2/${file%.*}.txt
+    echo "$file"
+    for victim in /home/amax/linxinrui/project/new_exp/victims/exec/* ;do
+        if [[ ${victim} != *"bmp" && ${victim} != *"dat" && ${victim} != *"data"  && ${victim} != *"flo" && ${victim} != *"output" && ${victim} != *"pgm" && ${victim} != *"run" ]];
+        then
+            if [[ ${victim} != *"imageDenoising" && ${victim} != *"recursiveGaussian" && ${victim} != *"bilateralFilter" ]];
+            then
+                sh /home/amax/linxinrui/project/new_exp/start_as_root.sh
+                echo "Start mps. Enermy is $file; victim is ${victim##*/}"
+
+                for (( i=0; i<$NUM_SM; i++ ));do
+                    ./"$file" --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+                    # pid=$!
+                    # taskset -cp 0 $pid
+                    # cpulimit -l 50 -p $pid
+                done
+
+                sleep 2
+                # result=$(victim_time ${victim}) 
+                result=$(/home/amax/linxinrui/project/new_exp/victims/exec/victims_run ${victim}) 
+                # relative_file=${victim##*/}
+                # result=$(/home/amax/linxinrui/project/new_exp/victims/exec/victims_run ${relative_file}) 
+                sleep 1
+                echo "$result====timeof${victim##*/} ms" >>/home/amax/linxinrui/project/new_exp/logs/inter_L2/${file%.*}.txt
+                killall $file
+                sh /home/amax/linxinrui/project/new_exp/stop_as_root.sh
+                echo "End mps"
+
+            fi
+        fi 
+    done
+done
+# NUM_SM=28
+# # Launch enemy program on each SM
+# for (( i=0; i<$NUM_SM; i++ ))
+# do
+#     # ./empty.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+#     # ./per_thread_read.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28))  &
+#     # ./per_thread_write.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+#     # ./per_warp_read.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+#     ./per_warp_write.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+# done
+# wait
+# # sleep 5 

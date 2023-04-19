@@ -1,0 +1,102 @@
+#!/bin/bash
+
+# array_sm=[1,3,5,7]
+# for i in array_sm;do
+#     ./float_add.cu.out --device 0 --sm $i --block-size 12 --grid-size $((4)) &
+# done
+
+
+function victim_time(){ 
+    begin_time=`date +%s.%N`
+    # for i in {1..10}; do
+        $1
+    # done
+    wait 
+    end_time=`date +%s.%N` 
+    echo "$end_time - $begin_time" | bc 
+    # time_diff=$(echo "$end_time - $begin_time" | bc )
+    # echo "$time_diff"
+} 
+###自己程序
+# result=$(victim_time /home/jane/task/new_exp/victims/exec/vectorAdd) 
+
+# echo "$result is the time" >>time_result.txt
+
+NUM_SM=28
+
+for file in *.cu.out; do
+#   if [[ -x "$file" && ! -d "$file" ]]; then
+    echo "$file" >>time_result.txt
+    for victim in /home/jane/task/new_exp/victims/exec/* ;do
+        if [[ ${victim} != *"bmp" && ${victim} != *"dat" && ${victim} != *"data"  && ${victim} != *"flo" && ${victim} != *"output" && ${victim} != *"pgm" ]];
+        then
+            if [[ ${victim} != *"imageDenoising" && ${victim} != *"recursiveGaussian" && ${victim} != *"bilateralFilter" ]];
+            then
+                sh /home/jane/task/new_exp/start_as_root.sh
+                echo “Start mps”
+
+                for (( i=0; i<$NUM_SM; i++ ));do
+                    ./"$file" 
+                done
+
+                sleep 5
+                echo "$file      -----    $victim"
+                result=$(victim_time ${victim}) 
+                echo "$result is the $victim time" >>time_result.txt
+
+                killall $file
+
+                sh /home/jane/task/new_exp/stop_as_root.sh
+                echo "End mps"
+
+            fi
+        fi
+    done
+#     # for num in {1..13};do
+#         sh /home/jane/task/new_exp/start_as_root.sh
+#         echo “start mps”
+#         sleep 1
+#         # 存储需要运行的可执行文件名
+#         declare -a executables=("convolutionFFT2D" "convolutionSeparable" "dct8x8")
+#         # 遍历每个文件夹并运行可执行文件
+#         for folder in /home/jane/task/new_exp/victims/exec/*
+#         do
+#             # 获取当前文件夹名
+#             foldername=$(basename ${folder})
+
+#             # 遍历需要运行的可执行文件
+#             for executable in "${executables[@]}"
+#             do
+#                 # 拼接可执行文件的完整路径
+#                 filepath="${folder}${executable}"
+#                 if [ -f "${filepath}" ]; then
+#                     echo "Running ${filepath} in ${foldername} ..."
+#                     # ${filepath}
+#                 fi
+#             done
+#         done
+#         sh /home/jane/task/new_exp/stop_as_root.sh
+#         echo "end mps"
+#     # done
+
+    
+
+# #   fi
+# done
+# # Launch enemy program on each SM
+# for (( i=0; i<$NUM_SM; i++ ))
+# do
+#     # ./empty --device 0 --sm $i --block-size 1 --grid-size $((32 * 2)) &
+#     ./double_add.cu.out --device 0 --sm $i --block-size 1 --grid-size $((32 * 2))  &
+#     # ./double_mult.cu.out --device 0 --sm $i --block-size 1 --grid-size $((32 * 2)) &
+#     # ./float_add.cu.out --device 0 --sm $i --block-size 1 --grid-size $((32 * 2)) &
+#     # ./float_mult.cu.out --device 0 --sm $i --block-size 1 --grid-size $((32 * 2)) &
+#     # ./int16_t_add.cu.out --device 0 --sm $i --block-size 1 --grid-size $((32 * 2))  &
+#     # ./int16_t_mult.cu.out --device 0 --sm $i --block-size 1 --grid-size $((32 * 2)) &
+#     # ./int32_t_add.cu.out --device 0 --sm $i --block-size 1 --grid-size $((32 * 2))  &
+#     # ./int32_t_mult.cu.out --device 0 --sm $i --block-size 1 --grid-size $((32 * 2))  &
+#     # ./int64_t_add.cu.out --device 0 --sm $i --block-size 1 --grid-size $((32 * 2)) &
+#     # ./int64_t_mult.cu.out --device 0 --sm $i --block-size 1 --grid-size $((32 * 2))  &
+# done
+# wait
+# # sleep 5

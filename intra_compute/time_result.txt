@@ -1,0 +1,45 @@
+1个受害者vectorAdd
+empty 7.826717161 seconds,7.668347013
+double_add 11.350991322 ,11.754091508
+double_mult 	 11.404308559 	
+float_add	11.987365560
+float_mult	11.222728615
+int16_t_add	11.104462543
+int16_t_mult	11.073518512 
+int32_t_add	11.551666775
+int32_t_mult	11.352622178
+int64_t_add	11.480936427 
+int64_t_mult	11.071457579 
+
+
+2个受害者vectorAdd,matrixMul
+empty	9.099798166
+double_add	16.764956199
+double_mult 	 17.581481242	
+float_add	17.506443284
+float_mult	17.804665684
+int16_t_add	17.250085568
+int16_t_mult	17.088054597
+int32_t_add	17.331983816
+int32_t_mult	17.368844012
+int64_t_add	17.528547449
+int64_t_mult	19.070122432
+
+
+3个受害者vectorAdd,matrixMul,scalarProd
+empty	9.355421250
+double_add	17.581023067
+double_mult 	 16.295085473
+float_add	18.661496827
+float_mult	16.538214115
+int16_t_add	16.959528154
+int16_t_mult	17.409545993
+int32_t_add	17.505351948
+int32_t_mult	16.869672783
+int64_t_add	18.473313204
+int64_t_mult	16.348468934
+
+
+4个受害者vectorAdd,matrixMul,scalarProd,5内核
+
+

@@ -1,0 +1,117 @@
+#!/bin/bash
+
+function victim_time(){ 
+    begin_time=`date +%s.%N`
+    for (( k=0; k<10; k++ ));do
+        for (( i=0; i<$NUM_SM; i++ ));do
+            $1 --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+        done
+        wait
+    done
+    end_time=`date +%s.%N` 
+    echo "$end_time - $begin_time" | bc 
+} 
+###自己程序
+# result=$(victim_time /home/jane/task/new_exp/victims/exec/vectorAdd) 
+
+# echo "$result is the time" >>time_result.txt
+
+NUM_SM=28
+
+for file in *.cu.out; do
+    echo "$file" >>/home/amax/linxinrui/project/new_exp/logs/intra_L1/${file%.*}.txt
+    echo "$file"
+    for victim in /home/amax/linxinrui/project/new_exp/victims/exec/* ;do
+        if [[ ${victim} != *"bmp" && ${victim} != *"dat" && ${victim} != *"data"  && ${victim} != *"flo" && ${victim} != *"output" && ${victim} != *"pgm" && ${victim} != *"run" ]];
+        then
+            if [[ ${victim} != *"imageDenoising" && ${victim} != *"recursiveGaussian" && ${victim} != *"bilateralFilter" ]];
+            then
+                sh /home/amax/linxinrui/project/new_exp/start_as_root.sh
+                echo "Start mps. Enermy is $file; victim is ${victim##*/}"
+
+                for (( i=0; i<$NUM_SM; i++ ));do
+                    ./"$file" --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+                    # pid=$!
+                    # taskset -cp 0 $pid
+                    # cpulimit -l 50 -p $pid
+                done
+
+                sleep 2
+                # result=$(victim_time ${victim}) 
+                result=$(/home/amax/linxinrui/project/new_exp/victims/exec/victims_run ${victim}) 
+                # relative_file=${victim##*/}
+                # result=$(/home/amax/linxinrui/project/new_exp/victims/exec/victims_run ${relative_file}) 
+                sleep 1
+                echo "$result====timeof${victim##*/} ms" >>/home/amax/linxinrui/project/new_exp/logs/intra_L1/${file%.*}.txt
+                killall $file
+                sh /home/amax/linxinrui/project/new_exp/stop_as_root.sh
+                echo "End mps"
+
+            fi
+        fi 
+    done
+done
+# NUM_SM=28
+# function victim_time(){ 
+#     begin_time=`date +%s.%N`
+#     for (( k=0; k<10; k++ ));do
+#         for (( i=0; i<$NUM_SM; i++ ));do
+#             $1 --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+#         done
+#         wait
+#     done
+#     end_time=`date +%s.%N` 
+#     echo "$end_time - $begin_time" | bc 
+# } 
+# ###自己程序
+# # result=$(victim_time /home/jane/task/new_exp/victims/exec/vectorAdd) 
+
+# # echo "$result is the time" >>time_result.txt
+
+
+# for file in *.cu.out; do
+# #   if [[ -x "$file" && ! -d "$file" ]]; then
+#     echo "$file" >>time_result.txt
+#     for victim in /home/jane/task/new_exp/victims/exec/* ;do
+#         if [[ ${victim} != *"bmp" && ${victim} != *"dat" && ${victim} != *"data"  && ${victim} != *"flo" && ${victim} != *"output" && ${victim} != *"pgm" ]];
+#         then
+#             if [[ ${victim} != *"imageDenoising" && ${victim} != *"recursiveGaussian" && ${victim} != *"bilateralFilter" ]];
+#             then
+#                 sh /home/jane/task/new_exp/start_as_root.sh
+#                 echo “Start mps”
+
+#                 for (( i=0; i<$NUM_SM; i++ ));do
+#                     ./"$file" --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+#                 done
+
+#                 sleep 2
+#                 # result=$(victim_time ${victim}) 
+#                 result=$(/home/jane/task/new_exp/victims/victims_run ${victim}) 
+#                 sleep 1
+
+#                 echo "  $result  ${victim##*/}" >>time_result.txt
+
+#                 sudo killall $file
+
+#                 sh /home/jane/task/new_exp/stop_as_root.sh
+#                 echo "End mps"
+
+#             fi
+#         fi
+#     done
+# done
+# #!/bin/bash
+
+# NUM_SM=28
+# # Launch enemy program on each SM
+# for (( i=0; i<$NUM_SM; i++ ))
+# do
+#     # ./empty.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+#     # ./all_read.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28))  &
+#     # ./all_write.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+#     # ./read_write_8_24.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+#     # ./read_write_16_16.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+#     ./read_write_24_8.cu.out --device 0 --sm $i --block-size 1024 --grid-size $((28)) &
+# done
+# wait
+# # sleep 5 

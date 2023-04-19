@@ -1,0 +1,24 @@
+1个受害者vectorAdd
+empty	7.950919796
+per_thread_read	8.314881664
+per_thread_write	10.300316147
+per_warp_read	8.528091209
+per_warp_write	9.042184008
+
+2个受害者vectorAdd,matrixMul
+empty	8.966933300
+per_thread_read	11.245304207
+per_thread_write	11.535936771
+per_warp_read	13.155298796
+per_warp_write	11.910184933
+
+3个受害者vectorAdd,matrixMul,scalarProd
+empty	11.133640916
+per_thread_read	13.500882684
+per_thread_write	12.327751340
+per_warp_read	10.713229640
+per_warp_write	11.396618533
+
+
+
+
