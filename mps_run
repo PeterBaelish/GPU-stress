@@ -1,0 +1,31 @@
+#!/bin/bash
+# Launch all 8 CUDA programs in parallel
+#  nvcc C.cu -o C -I /usr/local/cuda-11.3/samples/common/inc
+for i in {1..10}
+do
+    ./1034 &
+done
+
+# Capture the start time
+start1=$(date +%s.%N)
+
+# Wait for all background jobs to finish
+wait
+
+# Capture the end time
+end1=$(date +%s.%N)
+
+# # Get the start and end times of each program
+# for i in {1..8}
+# do
+#     start=$(grep -oP "(?<=Start Time $i: ).*" out.log)
+#     end=$(grep -oP "(?<=End Time $i: ).*" out.log)
+#     echo "Program $i took $(($(date -d "$end" +%s%N) - $(date -d "$start" +%s%N))) nanoseconds"
+# done
+
+time_diff=$(echo "$end1 - $start1" | bc)
+echo "Total time taken: $time_diff seconds"
+# ./1034 &
+# ./1034 &
+# ./1034 &
+# ./1034
